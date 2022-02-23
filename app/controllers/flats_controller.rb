@@ -11,9 +11,8 @@ class FlatsController < ApplicationController
         lat: flat.latitude,
         lng: flat.longitude,
         info_window: render_to_string(partial: "info_window", locals: { flat: flat }),
-        image_url: helpers.asset_url("quokka.png")
-        # # You can also use the `render_to_string` approach for the custom markers
-        # custom_marker: render_to_string(partial: "marker", locals: { flat: flat }),
+        marker_html: render_to_string(partial: "marker", locals: { flat: flat })
+        # image_url: helpers.asset_url("quokka.png")
       }
     end
   end

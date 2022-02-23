@@ -33,17 +33,9 @@ export default class extends Controller { // equivalent to `class DefaultClass <
     this.markersValue.forEach((marker) => {
       const popup = new mapboxgl.Popup().setHTML(marker.info_window)
 
-      // Create a HTML element for your custom marker
-      const customMarker = document.createElement("div")
-      customMarker.className = "marker"
-      customMarker.style.backgroundImage = `url('${marker.image_url}')`
-      customMarker.style.backgroundSize = "contain"
-      customMarker.style.width = "50px"
-      customMarker.style.height = "50px"
-
-      // customMarker.addEventListener('click', () => {
-      //   console.log(`clicked marker`)
-      // })
+      // Create HTML element for custom marker
+      const customMarker = document.createElement("div");
+      customMarker.innerHTML = marker.marker_html.trim();
 
       new mapboxgl.Marker(customMarker)
         .setLngLat([ marker.lng, marker.lat ])

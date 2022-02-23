@@ -1,1 +1,4 @@
-<%= image_tag 'quokka.png' %>
+<%= image_tag 'quokka.png', width: 50 %>
+<div class="badge rounded-pill bg-light text-dark">
+  <%= number_to_currency(rand(900) * 100, {unit: '¥', precision: 0}) %>
+</div>
