@@ -4,6 +4,14 @@ class FlatsController < ApplicationController
   # GET /flats
   def index
     @flats = Flat.all
+
+    # the `geocoded` scope filters only flats with coordinates (latitude & longitude)
+    @markers = @flats.geocoded.near('Tokyo', 100).map do |flat|
+      {
+        lat: flat.latitude,
+        lng: flat.longitude
+      }
+    end
   end
 
   # GET /flats/1
