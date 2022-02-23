@@ -9,7 +9,11 @@ class FlatsController < ApplicationController
     @markers = @flats.geocoded.near('Tokyo', 100).map do |flat|
       {
         lat: flat.latitude,
-        lng: flat.longitude
+        lng: flat.longitude,
+        info_window: render_to_string(partial: "info_window", locals: { flat: flat }),
+        image_url: helpers.asset_url("quokka.png")
+        # # You can also use the `render_to_string` approach for the custom markers
+        # custom_marker: render_to_string(partial: "marker", locals: { flat: flat }),
       }
     end
   end

@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import mapboxgl from "mapbox-gl"
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 
 export default class extends Controller { // equivalent to `class DefaultClass < Controller` in Ruby
   // Stimulus values:
@@ -19,16 +20,34 @@ export default class extends Controller { // equivalent to `class DefaultClass <
 
     this.map = new mapboxgl.Map({
       container: this.element,
-      style: "mapbox://styles/mapbox/streets-v10"
+      style: "mapbox://styles/trouni/ckzyv97j500j115r4kjty27y7"
     })
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
+
+    this.map.addControl(new MapboxGeocoder({ accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl }))
   }
 
   #addMarkersToMap() {
     this.markersValue.forEach((marker) => {
-      new mapboxgl.Marker()
+      const popup = new mapboxgl.Popup().setHTML(marker.info_window)
+
+      // Create a HTML element for your custom marker
+      const customMarker = document.createElement("div")
+      customMarker.className = "marker"
+      customMarker.style.backgroundImage = `url('${marker.image_url}')`
+      customMarker.style.backgroundSize = "contain"
+      customMarker.style.width = "50px"
+      customMarker.style.height = "50px"
+
+      // customMarker.addEventListener('click', () => {
+      //   console.log(`clicked marker`)
+      // })
+
+      new mapboxgl.Marker(customMarker)
         .setLngLat([ marker.lng, marker.lat ])
+        .setPopup(popup)
         .addTo(this.map)
     });
   }
